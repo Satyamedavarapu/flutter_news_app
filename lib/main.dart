@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_news_app/blocs/bloc/article_bloc.dart';
 import 'package:flutter_news_app/cubits/cubit/theme_cubit.dart';
 import 'package:flutter_news_app/cubits/internet_cubit.dart';
-import 'package:flutter_news_app/presentation/screens/home_screen.dart';
+import 'package:flutter_news_app/presentation/auth_screens/login_page.dart';
 import 'package:flutter_news_app/utilities/app_theme.dart';
 
 void main() {
@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
             theme: state.isDark == true
                 ? AppTheme().darkTheme
                 : AppTheme().lightTheme,
-            home: const HomeScreen(),
+            home: const LoginPage(),
           );
         },
       ),
