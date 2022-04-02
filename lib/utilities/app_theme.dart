@@ -30,6 +30,8 @@ class AppTheme {
             fontSize: 18.0,
             fontWeight: FontWeight.bold,
             color: Colors.blueGrey),
+        bodyText2: TextStyle(
+            fontSize: 18.0, fontWeight: FontWeight.bold, color: Colors.white),
         caption: TextStyle(
             fontSize: 18.0,
             fontWeight: FontWeight.bold,
@@ -60,11 +62,10 @@ class AppTheme {
           fontSize: 32.0, fontWeight: FontWeight.bold, color: Colors.orange),
       bodyText1: TextStyle(
           fontSize: 18.0, fontWeight: FontWeight.bold, color: Colors.black),
-          caption: TextStyle(
-            fontSize: 18.0,
-            fontWeight: FontWeight.bold,
-            color: Colors.redAccent)
+      caption: TextStyle(
+          fontSize: 18.0, fontWeight: FontWeight.bold, color: Colors.redAccent),
+      bodyText2: TextStyle(
+          fontSize: 18.0, fontWeight: FontWeight.bold, color: Colors.white),
     ),
-    
   );
 }

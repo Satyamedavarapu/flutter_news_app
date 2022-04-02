@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:flutter_news_app/data/models/news_model.dart';
@@ -10,7 +9,6 @@ import 'package:flutter_news_app/utilities/constants.dart';
 class GetNewsApi {
   String url = Constants.getNewsUrl;
 
-  Dio dio = Dio();
 
   Future<dynamic> getArticles() async {
     List<Article> articlesList = [];
@@ -38,8 +36,7 @@ class GetNewsApi {
   }
 
   Future<dynamic> getArticleData() async {
-
-    final response = await http.get(
+   final response = await http.get(
       Uri.parse(Constants.getNewsUrl),
     );
 

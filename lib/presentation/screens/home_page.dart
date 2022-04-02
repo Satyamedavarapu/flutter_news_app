@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_news_app/blocs/bloc/article_bloc.dart';
 import 'package:flutter_news_app/data/api/get_news_api.dart';
-import 'package:flutter_news_app/data/models/news_model.dart';
+import 'package:flutter_news_app/presentation/components/article_card.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({
@@ -15,6 +15,8 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   GetNewsApi getNews = GetNewsApi();
+
+  ArticleCard articleCard = ArticleCard();
 
   @override
   void initState() {
@@ -82,12 +84,13 @@ class _HomePageState extends State<HomePage> {
                         if (snapshot.hasData) {
                           // return Text(snapshot.data.toString());
 
-                          return articleCard(snapshot.data);
+                          return articleCard.articleCard(context, snapshot.data);
 
                           // return ListView.builder(
-                          //     itemCount: snapshot.data.length,
+                          //   scrollDirection: Axis.horizontal,
+                          //     itemCount: snapshot.data!.length,
                           //     itemBuilder: ((context, index) {
-                          //       return articleCard(snapshot.data[index]);
+                          //       return articleCard(snapshot.data![index]);
                           //     }));
                         } else {
                           return const Center(
@@ -132,50 +135,5 @@ class _HomePageState extends State<HomePage> {
         }
       },
     );
-  }
-
-  // FutureBuilder<List<Article>> futureMethod() {
-  //   return FutureBuilder<List<Article>>(
-  //                 future: getNews.getArticles(),
-  //                 builder: (context, snapshot) {
-  //                   if (snapshot.hasData &&
-  //                       snapshot.connectionState == ConnectionState.done) {
-
-  //                     return ListView.builder(
-  //                         itemCount: snapshot.data!.length,
-  //                         itemBuilder: (context, index) {
-  //                           return articleCard(snapshot.data![index]);
-  //                         });
-  //                   } else if (snapshot.connectionState !=
-  //                       ConnectionState.done) {
-  //                     return const Center(
-  //                       child: CircularProgressIndicator.adaptive(),
-  //                     );
-  //                   } else if (snapshot.hasError) {
-  //                     return  Center(
-  //                       child: Text('Snapshot Error ${snapshot.hasError.toString()}'),
-  //                     );
-  //                   } else if (!snapshot.hasData) {
-  //                     return const Center(
-  //                       child: Text('Snapshot has no data'),
-  //                     );
-  //                   } else {
-  //                     return const Center(
-  //                       child: Text('Something went wrong'),
-  //                     );
-  //                   }
-  //                 });
-  // }
-
-  Widget articleCard(Article article) {
-    return Container(
-        decoration: BoxDecoration(
-            image: DecorationImage(
-              image: NetworkImage(article.urlToImage),
-              fit: BoxFit.fill,
-            ),
-            borderRadius: BorderRadius.circular(12.0)),
-        alignment: Alignment.bottomCenter,
-        child: Text(article.title));
   }
 }
