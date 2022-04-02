@@ -36,6 +36,12 @@ class AppTheme {
             fontSize: 18.0,
             fontWeight: FontWeight.bold,
             color: Colors.redAccent)),
+              buttonTheme:  ButtonThemeData(
+      buttonColor: Colors.amber, 
+      textTheme: ButtonTextTheme.primary,
+      padding: const EdgeInsets.all(8.0),
+      shape:  RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0))
+    )
   );
 
   ThemeData lightTheme = ThemeData(
@@ -67,5 +73,11 @@ class AppTheme {
       bodyText2: TextStyle(
           fontSize: 18.0, fontWeight: FontWeight.bold, color: Colors.white),
     ),
+    buttonTheme:  ButtonThemeData(
+      buttonColor: Colors.blue, 
+      textTheme: ButtonTextTheme.primary,
+      padding: const EdgeInsets.all(8.0),
+      shape:  RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0))
+    )
   );
 }
