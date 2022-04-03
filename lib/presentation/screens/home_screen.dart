@@ -31,55 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
       initialIndex: 0,
       child: Scaffold(
           drawer: const DrawerWidget(),
-          appBar: AppBar(
-            elevation: 10.0,
-            backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
-            title: RichText(
-                text: TextSpan(children: [
-              TextSpan(
-                  text: 'News ', style: Theme.of(context).textTheme.headline1),
-              TextSpan(
-                  text: 'Hour', style: Theme.of(context).textTheme.headline2)
-            ])),
-            actions: [
-              IconButton(
-                icon: const Icon(
-                  Icons.lightbulb,
-                  size: 32.0,
-                ),
-                onPressed: () {
-                  BlocProvider.of<ThemeCubit>(context).themeChange();
-                },
-              ),
-              const Padding(padding: EdgeInsets.only(right: 8.0)),
-              const Icon(Icons.search, size: 32.0),
-              const Padding(padding: EdgeInsets.only(right: 8.0)),
-              IconButton(
-                  icon: const Icon(Icons.notifications_on),
-                  iconSize: 32.0,
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: ((context) => const NotificationsPage())));
-                  }),
-              const Padding(padding: EdgeInsets.only(right: 8.0)),
-            ],
-            bottom: const TabBar(tabs: [
-              Tab(
-                text: 'Explore',
-              ),
-              Tab(
-                text: 'Entertainment',
-              ),
-              Tab(
-                text: 'Politics',
-              ),
-              Tab(
-                text: 'Sports',
-              ),
-            ]),
-          ),
+          appBar: appBar(context),
           body: SafeArea(
             child: IndexedStack(
               index: currentPage,
@@ -88,6 +40,58 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           bottomNavigationBar: bottomNavigationBar(context)),
     );
+  }
+
+  AppBar appBar(BuildContext context) {
+    return AppBar(
+    elevation: 10.0,
+    backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
+    title: RichText(
+        text: TextSpan(children: [
+      TextSpan(
+          text: 'News ', style: Theme.of(context).textTheme.headline1),
+      TextSpan(
+          text: 'Hour', style: Theme.of(context).textTheme.headline2)
+    ])),
+    actions: [
+      IconButton(
+        icon: const Icon(
+          Icons.lightbulb,
+          size: 32.0,
+        ),
+        onPressed: () {
+          BlocProvider.of<ThemeCubit>(context).themeChange();
+        },
+      ),
+      const Padding(padding: EdgeInsets.only(right: 8.0)),
+      const Icon(Icons.search, size: 32.0),
+      const Padding(padding: EdgeInsets.only(right: 8.0)),
+      IconButton(
+          icon: const Icon(Icons.notifications_on),
+          iconSize: 32.0,
+          onPressed: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: ((context) => const NotificationsPage())));
+          }),
+      const Padding(padding: EdgeInsets.only(right: 8.0)),
+    ],
+    bottom: const TabBar(tabs: [
+      Tab(
+        text: 'Explore',
+      ),
+      Tab(
+        text: 'Entertainment',
+      ),
+      Tab(
+        text: 'Politics',
+      ),
+      Tab(
+        text: 'Sports',
+      ),
+    ]),
+  );
   }
 
   Widget bottomNavigationBar(BuildContext context) {
@@ -120,7 +124,7 @@ class _HomeScreenState extends State<HomeScreen> {
               label: 'Home',
               backgroundColor: Theme.of(context).primaryColor),
           BottomNavigationBarItem(
-              icon: const Icon(Icons.video_settings),
+              icon: const Icon(Icons.video_collection),
               label: 'Videos',
               backgroundColor: Theme.of(context).primaryColor),
           BottomNavigationBarItem(
@@ -134,4 +138,8 @@ class _HomeScreenState extends State<HomeScreen> {
         ]);
   }
 }
+
+
+
+
 
