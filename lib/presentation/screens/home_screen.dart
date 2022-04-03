@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_news_app/cubits/cubit/theme_cubit.dart';
+import 'package:flutter_news_app/cubits/theme_cubit/theme_cubit.dart';
 import 'package:flutter_news_app/presentation/screens/categories_page.dart';
 import 'package:flutter_news_app/presentation/screens/home_page.dart';
+import 'package:flutter_news_app/presentation/screens/notification_page.dart';
 import 'package:flutter_news_app/presentation/screens/profile_page.dart';
 import 'package:flutter_news_app/presentation/screens/videos_page.dart';
 
@@ -40,7 +41,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   text: 'Hour', style: Theme.of(context).textTheme.headline2)
             ])),
             actions: [
-              
               IconButton(
                 icon: const Icon(
                   Icons.lightbulb,
@@ -48,14 +48,21 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 onPressed: () {
                   BlocProvider.of<ThemeCubit>(context).themeChange();
-                
                 },
               ),
               const Padding(padding: EdgeInsets.only(right: 8.0)),
               const Icon(Icons.search, size: 32.0),
               const Padding(padding: EdgeInsets.only(right: 8.0)),
-
-              const Icon(Icons.notifications_on, size: 32.0),
+              IconButton(
+                  icon: const Icon(Icons.notifications_on),
+                  iconSize: 32.0,
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: ((context) => const NotificationsPage())));
+                  }),
+              const Padding(padding: EdgeInsets.only(right: 8.0)),
             ],
             bottom: const TabBar(tabs: [
               Tab(
