@@ -4,11 +4,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_news_app/blocs/article_bloc/article_bloc.dart';
 import 'package:flutter_news_app/cubits/theme_cubit/theme_cubit.dart';
 import 'package:flutter_news_app/cubits/internet_cubit/internet_cubit.dart';
+import 'package:flutter_news_app/data/services/notification_service.dart';
 import 'package:flutter_news_app/presentation/auth_screens/login_page.dart';
 import 'package:flutter_news_app/utilities/app_theme.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+  NotificationService().initNotification();
   runApp(MyApp(connectivity: Connectivity()));
 }
 

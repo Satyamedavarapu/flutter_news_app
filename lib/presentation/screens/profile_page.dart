@@ -1,6 +1,6 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_news_app/data/services/notification_service.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -10,6 +10,12 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  @override
+  void initState() {
+    NotificationService().initNotification();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -63,16 +69,34 @@ class _ProfilePageState extends State<ProfilePage> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               tile(
-                  context: context, tileName: 'Language', icon: Icons.language),
+                  onTap: () {
+                    NotificationService()
+                        .showNotification(1, 'Language', 'English', '1');
+                  },
+                  context: context,
+                  tileName: 'Language',
+                  icon: Icons.language),
               tile(
+                  onTap: () {
+                    NotificationService()
+                        .showNotification(2, 'Country', 'India', 'payload');
+                  },
                   context: context,
                   tileName: 'Country',
                   icon: Icons.countertops),
               tile(
+                  onTap: () async {
+                    await NotificationService().showNotification(
+                        3, 'Notifications', 'Flutter Local Notifications', '');
+                  },
                   context: context,
                   tileName: 'Notifications',
                   icon: Icons.notification_add),
               tile(
+                  onTap: () {
+                    NotificationService().showNotification(4, 'Signout',
+                        'User has been signed out successfully', '1');
+                  },
                   context: context,
                   tileName: 'Sign Out',
                   icon: Icons.exit_to_app),
@@ -86,6 +110,7 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget tile(
       {required BuildContext context,
       required String tileName,
+      required VoidCallback onTap,
       required IconData icon}) {
     return Padding(
       padding:

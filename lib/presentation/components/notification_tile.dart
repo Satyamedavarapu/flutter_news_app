@@ -13,13 +13,14 @@ class NotificationTile {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: ListTile(
+        
         onTap: onTap,
         leading: Image.network(
           articles.urlToImage!,
         ),
         title: Text(
           articles.title!,
-          style: Theme.of(context).textTheme.headline1,
+          style: Theme.of(context).textTheme.bodyText1,
         ),
         subtitle: Text(
           articles.source!.name!,

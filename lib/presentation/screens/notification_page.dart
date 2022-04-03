@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_news_app/blocs/article_bloc/article_bloc.dart';
 import 'package:flutter_news_app/cubits/internet_cubit/internet_cubit.dart';
+import 'package:flutter_news_app/data/services/notification_service.dart';
 import 'package:flutter_news_app/presentation/components/notification_tile.dart';
 
 class NotificationsPage extends StatefulWidget {
@@ -13,6 +14,12 @@ class NotificationsPage extends StatefulWidget {
 
 class _NotificationsPageState extends State<NotificationsPage> {
   NotificationTile notTile = NotificationTile();
+
+  @override
+  void initState() {
+    NotificationService().initNotification();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,12 +54,22 @@ class _NotificationsPageState extends State<NotificationsPage> {
                 itemBuilder: ((context, index) {
                   return notTile.tile(
                       articles: state.list[index],
-                      onTap: () {},
+                      onTap: () {
+                        NotificationService().showNotification(
+                            index,
+                            state.list[index].author!,
+                            state.list[index].title!,
+                            state.list[index].url!);
+                      },
                       context: context);
                 }),
                 separatorBuilder: (context, index) {
-                  return Divider(
-                    color: Theme.of(context).primaryColor,
+                  return Padding(
+                    padding: const EdgeInsets.only(right: 16.0, left: 16.0),
+                    child: Divider(
+                      color: Theme.of(context).primaryColor,
+                      thickness: 2.0,
+                    ),
                   );
                 },
               );

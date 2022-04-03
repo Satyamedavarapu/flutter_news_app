@@ -45,10 +45,10 @@ class AppTheme {
           padding: const EdgeInsets.all(8.0),
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12.0))),
-      listTileTheme: const ListTileThemeData(
-        contentPadding: EdgeInsets.all(4.0),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.horizontal()),
-        tileColor: Colors.indigo,
+      listTileTheme:  ListTileThemeData(
+        contentPadding: const EdgeInsets.all(4.0),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
+        tileColor: Colors.grey[300],
         horizontalTitleGap: 8.0,
         textColor: Colors.white,
         style: ListTileStyle.drawer,
@@ -99,10 +99,10 @@ class AppTheme {
           padding: const EdgeInsets.all(8.0),
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12.0))), 
-               listTileTheme: const ListTileThemeData(
-        contentPadding: EdgeInsets.all(4.0),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.horizontal()),
-        tileColor: Colors.white54,
+               listTileTheme:  ListTileThemeData(
+        contentPadding:const EdgeInsets.all(4.0),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
+        tileColor: Colors.blueGrey[100],
         horizontalTitleGap: 8.0,
         textColor: Colors.black,
         style: ListTileStyle.drawer,
