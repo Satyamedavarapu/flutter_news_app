@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_news_app/data/services/notification_service.dart';
+import 'package:flutter_news_app/utilities/constants.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -32,7 +33,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     flex: 5,
                     child: CircleAvatar(
                       backgroundImage: NetworkImage(
-                          'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8cHJvZmlsZXxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60'),
+                          Constants.profilePicUrl),
                       maxRadius: 72.0,
                       minRadius: 48.0,
                     ),

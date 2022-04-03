@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_news_app/utilities/constants.dart';
 
 class PopRow {
-
-
   Widget topRow(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(16.0),
@@ -12,6 +11,8 @@ class PopRow {
             flex: 2,
             child: CircleAvatar(
               radius: 28.0,
+              backgroundImage: NetworkImage(Constants.profilePicUrl),
+              
             ),
           ),
           Expanded(
@@ -44,7 +45,4 @@ class PopRow {
       ),
     );
   }
-
-
-
 }

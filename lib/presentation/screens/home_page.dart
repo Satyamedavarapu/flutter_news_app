@@ -104,7 +104,7 @@ class _HomePageState extends State<HomePage> {
         child: Card(
           elevation: 5.0,
           color: Theme.of(context).cardColor,
-          // color: Colors.blueGrey,
+       
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
           child: Container(
@@ -126,7 +126,7 @@ class _HomePageState extends State<HomePage> {
                               maxLines: 3,
                               softWrap: false,
                               overflow: TextOverflow.ellipsis,
-                              style: Theme.of(context).textTheme.bodyText1),
+                              style: Theme.of(context).textTheme.bodyText2),
                         ),
                         Container(
                             decoration: BoxDecoration(
@@ -161,7 +161,7 @@ class _HomePageState extends State<HomePage> {
                           const Icon(Icons.lock_clock),
                           Text(
                             articles.publishedAt.toString().split('T').first,
-                            style: Theme.of(context).textTheme.bodyText1,
+                            style: Theme.of(context).textTheme.bodyText2,
                           ),
                         ],
                       ),

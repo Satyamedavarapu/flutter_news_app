@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_news_app/cubits/theme_cubit/theme_cubit.dart';
+import 'package:flutter_news_app/presentation/components/drawer_component.dart';
 import 'package:flutter_news_app/presentation/screens/categories_page.dart';
 import 'package:flutter_news_app/presentation/screens/home_page.dart';
 import 'package:flutter_news_app/presentation/screens/notification_page.dart';
@@ -29,7 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
       length: 4,
       initialIndex: 0,
       child: Scaffold(
-          drawer: const Drawer(),
+          drawer: const DrawerWidget(),
           appBar: AppBar(
             elevation: 10.0,
             backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
@@ -133,3 +134,4 @@ class _HomeScreenState extends State<HomeScreen> {
         ]);
   }
 }
+
