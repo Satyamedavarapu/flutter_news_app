@@ -79,7 +79,8 @@ class _LoginPageState extends State<LoginPage> {
                                         PageTransition(
                                             child: const ForgotPassword(),
                                             type: PageTransitionType
-                                                .rightToLeftJoined));
+                                                .rightToLeftJoined,
+                                            childCurrent: const LoginPage()));
                                   },
                                   child: Text(
                                     'Forgot Password',
@@ -95,9 +96,8 @@ class _LoginPageState extends State<LoginPage> {
                                   Navigator.push(
                                       context,
                                       PageTransition(
-                                          child: const LoginPage(),
-                                          type: PageTransitionType
-                                              .leftToRightJoined));
+                                          child: const HomeScreen(),
+                                          type: PageTransitionType.fade));
                                 }
                               }),
                           InkWell(
@@ -106,8 +106,9 @@ class _LoginPageState extends State<LoginPage> {
                                   context,
                                   PageTransition(
                                       child: const RegisterPage(),
-                                      type: PageTransitionType
-                                          .bottomToTopJoined));
+                                      type:
+                                          PageTransitionType.bottomToTopJoined,
+                                      childCurrent: const LoginPage()));
                             },
                             child: RichText(
                               text: TextSpan(children: [
