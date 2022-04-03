@@ -2,9 +2,14 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_news_app/blocs/bloc/article_bloc.dart';
+import 'package:flutter_news_app/cubits/internet_cubit.dart';
 import 'package:flutter_news_app/data/api/get_news_api.dart';
 import 'package:flutter_news_app/data/models/carousel_model.dart';
-import 'package:flutter_news_app/presentation/components/article_card.dart';
+import 'package:flutter_news_app/data/models/news_model.dart';
+import 'package:flutter_news_app/presentation/components/carousel_container.dart';
+import 'package:flutter_news_app/presentation/components/divider_container.dart';
+import 'package:flutter_news_app/presentation/components/pop_row.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({
@@ -18,99 +23,169 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   GetNewsApi getNews = GetNewsApi();
 
-  ArticleCard articleCard = ArticleCard();
+  DividerContainer dc = DividerContainer();
+
+  PopRow popRow = PopRow();
 
   CarouselData carouselData = CarouselData();
+
+  CarouselContainer container = CarouselContainer();
 
   int activeIndex = 0;
 
   @override
   void initState() {
-    getNews.getArticleData();
+    getNews.getArticles();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      child: Column(
-        children: [
-          Expanded(
-              flex: 2,
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
+    return Scaffold(
+      body: BlocConsumer<InternetCubit, InternetState>(
+        listener: (context, state) {
+            if(state is InternetDisconnected) {
+             ScaffoldMessenger.of(context).showSnackBar( SnackBar(content: Text(state.message),) );
+            } 
+             else if(state is InternetConnectedMobile) {
+             ScaffoldMessenger.of(context).showSnackBar( SnackBar(content: Text(state.message),) );
+            }
+            else if(state is InternetConnectedWifi) {
+             ScaffoldMessenger.of(context).showSnackBar( SnackBar(content: Text(state.message),) );
+            }
+            else if(state is InternetDisconnected) {
+             ScaffoldMessenger.of(context).showSnackBar( SnackBar(content: Text(state.message),) );
+            }
+
+        },
+        builder: (context, state) {
+          if (state is InternetConnectedWifi || state is InternetConnectedMobile) {
+            return Column(
+              children: [
+                Expanded(flex: 2, child: popRow.topRow(context)),
+                Expanded(flex: 4, child: blocBuilder1()),
+                Expanded(flex: 2, child: dc.dividerContainer(context)),
+                Expanded(flex: 4, child: blocBuilder()),
+              ],
+            );
+          } else if (state is InternetInitial) {
+            return const Text('');
+          } else if (state is InternetDisconnected) {
+            return const Text('');
+          } else {
+            return const Center(child: Text('Network Error'));
+          }
+        },
+      ),
+    );
+  }
+
+  Widget popNews({required BuildContext context, required Articles articles}) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: InkWell(
+        onTap: () {
+          launch(articles.url!);
+        },
+        child: Card(
+          elevation: 5.0,
+          color: Theme.of(context).cardColor,
+          // color: Colors.blueGrey,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
+          child: Container(
+            padding: const EdgeInsets.all(8.0),
+            child:
+                Column(mainAxisAlignment: MainAxisAlignment.start, children: [
+              Expanded(
+                flex: 3,
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Expanded(
-                      flex: 2,
-                      child: CircleAvatar(
-                        radius: 28.0,
-                      ),
-                    ),
-                    Expanded(
-                      flex: 8,
-                      child: SizedBox(
-                        height: 48.0,
-                        child: TextFormField(
-                          maxLines: 1,
-                          validator: (val) {
-                            if (val == null || val.isEmpty) {
-                              return 'Please enter Username';
-                            } else {
-                              return null;
-                            }
-                          },
-                          style: Theme.of(context).textTheme.bodyText1,
-                          textInputAction: TextInputAction.done,
-                          keyboardType: TextInputType.text,
-                          decoration: InputDecoration(
-                              errorStyle: Theme.of(context).textTheme.caption,
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(32.0),
-                              ),
-                              hintText: 'Search News',
-                              hintStyle: Theme.of(context).textTheme.bodyText1),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Flexible(
+                          fit: FlexFit.loose,
+                          child: Text(articles.source!.name!,
+                              maxLines: 3,
+                              softWrap: false,
+                              overflow: TextOverflow.ellipsis,
+                              style: Theme.of(context).textTheme.bodyText1),
                         ),
-                      ),
+                        Container(
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(4.0),
+                                color: Colors.brown),
+                            padding: const EdgeInsets.all(4.0),
+                            alignment: Alignment.center,
+                            child: Text('Entertainment',
+                                style: Theme.of(context).textTheme.bodyText2)),
+                      ],
                     ),
+                    Container(
+                        height: 120.0,
+                        width: 90.0,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8.0),
+                            color: Theme.of(context).primaryColor,
+                            image: DecorationImage(
+                              image: NetworkImage(articles.urlToImage!),
+                              fit: BoxFit.fill,
+                            )))
                   ],
                 ),
-              )),
-          Expanded(
-              flex: 4,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12.0)),
-                    child: CarouselSlider.builder(
-                        itemCount: cList.length,
-                        itemBuilder: (context, index, currentIndex) {
-                          return carouselContainer(carouselModel: cList[index]);
-                        },
-                        options: CarouselOptions(
-                          enlargeCenterPage: true,
-                          autoPlayAnimationDuration:
-                              const Duration(milliseconds: 1000),
-                          autoPlay: true,
-                          reverse: true,
-                          scrollDirection: Axis.horizontal,
-                          pageSnapping: true,
-                          enableInfiniteScroll: true,
-                        ))),
-              )),
-          Expanded(
-              flex: 2,
-              child: Container(
-                color: Colors.green,
-              )),
-          Expanded(
-              flex: 4,
-              child: Container(
-                color: Colors.amber,
-              )),
-        ],
+              ),
+              Expanded(
+                  flex: 1,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          const Icon(Icons.lock_clock),
+                          Text(
+                            articles.publishedAt.toString().split('T').first,
+                            style: Theme.of(context).textTheme.bodyText1,
+                          ),
+                        ],
+                      ),
+                      const Icon(Icons.favorite)
+                    ],
+                  ))
+            ]),
+            // child: blocBuilder(),
+          ),
+        ),
       ),
+    );
+  }
+
+  Widget carouselWidget({required List<Articles> articleModel}) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
+          decoration: BoxDecoration(borderRadius: BorderRadius.circular(12.0)),
+          child: CarouselSlider.builder(
+              itemCount: articleModel.length,
+              itemBuilder: (context, index, currentIndex) {
+                return container.carouselContainer(
+                    carouselModel: articleModel[index], context: context);
+              },
+              options: cOptions())),
+    );
+  }
+
+  CarouselOptions cOptions() {
+    return CarouselOptions(
+      enlargeCenterPage: true,
+      autoPlayAnimationDuration: const Duration(milliseconds: 1000),
+      autoPlay: true,
+      reverse: true,
+      scrollDirection: Axis.horizontal,
+      pageSnapping: true,
+      enableInfiniteScroll: true,
     );
   }
 
@@ -118,11 +193,10 @@ class _HomePageState extends State<HomePage> {
     return BlocBuilder<ArticleBloc, ArticleState>(
       builder: (context, state) {
         if (state is ArticleLoaded) {
-          return ListView.builder(
-              itemCount: state.list.length,
-              itemBuilder: (context, index) {
-                return Text(state.list[index].title);
-              });
+          return popNews(context: context, articles: state.list[0]);
+          // return Text(
+          //     state.list[index].publishedAt.toString().split('T').first);
+
         } else if (state is ArticleFailure) {
           return const Center(child: Text('Failed to Load Articles'));
         } else if (state is ArticleError) {
@@ -136,53 +210,38 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget carouselContainer({required CarouselModel carouselModel}) {
-    return Container(
-      height: 270.0,
-      decoration: BoxDecoration(
-          image: DecorationImage(
-              image: NetworkImage(carouselModel.image),
-              fit: BoxFit.fill,
-              filterQuality: FilterQuality.high),
-          borderRadius: BorderRadius.circular(15.0)),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(4.0),
-                        color: Colors.brown),
-                    padding: const EdgeInsets.all(4.0),
-                    alignment: Alignment.center,
-                    child: Text(carouselModel.categoryName,
-                        style: Theme.of(context).textTheme.bodyText2)),
-                Row(
-                  children: [
-                    const Icon(Icons.favorite, color: Colors.blueGrey),
-                    Text(carouselModel.likes.toString())
-                  ],
-                )
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                carouselModel.headline,
-                maxLines: 3,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ),
-          )
-        ],
-      ),
+  BlocBuilder<ArticleBloc, ArticleState> blocBuilder1() {
+    return BlocBuilder<ArticleBloc, ArticleState>(
+      builder: (context, state) {
+        if (state is ArticleLoaded) {
+          return ListView.builder(
+              itemCount: state.list.length,
+              itemBuilder: (context, index) {
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12.0)),
+                      child: CarouselSlider.builder(
+                          itemCount: state.list.length,
+                          itemBuilder: (context, index, currentIndex) {
+                            return container.carouselContainer(
+                                carouselModel: state.list[index],
+                                context: context);
+                          },
+                          options: cOptions())),
+                );
+              });
+        } else if (state is ArticleFailure) {
+          return const Center(child: Text('Failed to Load Articles'));
+        } else if (state is ArticleError) {
+          return const Center(child: Text('Error in Loading Articles'));
+        } else if (state is ArticleInitial) {
+          return const Center(child: CircularProgressIndicator.adaptive());
+        } else {
+          return const Center(child: Text('Something Went wrong'));
+        }
+      },
     );
   }
 

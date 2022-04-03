@@ -5,7 +5,7 @@ abstract class ArticleState {}
 class ArticleInitial extends ArticleState {}
 
 class ArticleLoaded extends ArticleState {
-   List<Article> list = [];
+   List<Articles> list = [];
 
   ArticleLoaded({
     required this.list,

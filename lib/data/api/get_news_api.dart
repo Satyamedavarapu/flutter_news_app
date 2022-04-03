@@ -11,10 +11,12 @@ class GetNewsApi {
 
 
   Future<dynamic> getArticles() async {
-    List<Article> articlesList = [];
+    List<Articles> articlesList = [];
 
     final response = await http.get(
-      Uri.parse(Constants.getNewsUrl),
+      Uri.parse(url),
+      headers: Constants.headers,
+
     );
 
     log(response.body);
@@ -25,11 +27,14 @@ class GetNewsApi {
 
       log('newsData is ' + newsData.toString());
 
-      for (var article in newsData.articles) {
+      for (var article in newsData.articles!) {
         articlesList.add(article);
       }
+
+
+
       log(articlesList.length.toString());
-      return newsData;
+      return articlesList;
     } else {
       return articlesList = [];
     }
@@ -38,13 +43,14 @@ class GetNewsApi {
   Future<dynamic> getArticleData() async {
    final response = await http.get(
       Uri.parse(Constants.getNewsUrl),
+      headers: Constants.headers,
     );
 
     Map<String, dynamic> jsonString = jsonDecode(response.body);
 
     List jsonArticle = jsonString['articles'];
 
-    Article newArticle = Article.fromJson(jsonArticle[0]);
+    Articles newArticle = Articles.fromJson(jsonArticle[0]);
 
     return newArticle;
   }

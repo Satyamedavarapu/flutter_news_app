@@ -6,11 +6,13 @@ class AppTheme {
     brightness: Brightness.dark,
     primarySwatch: Colors.amber,
     primaryColor: Colors.amber,
+    cardColor: Colors.grey,
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
       elevation: 10.0,
       backgroundColor: AppColors.darkGrey,
       selectedItemColor: Colors.amberAccent,
       unselectedItemColor: Colors.white,
+      
       selectedLabelStyle:
           const TextStyle(color: Colors.amber, fontWeight: FontWeight.bold),
       unselectedLabelStyle:
@@ -48,6 +50,7 @@ class AppTheme {
     brightness: Brightness.light,
     primarySwatch: Colors.lightBlue,
     primaryColor: Colors.lightBlue,
+    cardColor: Colors.white70,
     bottomNavigationBarTheme: const BottomNavigationBarThemeData(
       backgroundColor: Colors.white,
       elevation: 10.0,

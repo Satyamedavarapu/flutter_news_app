@@ -1,10 +1,32 @@
 part of 'internet_cubit.dart';
 
-@immutable
-abstract class InternetState {}
+ class InternetState {}
 
-class InternetInitial extends InternetState {}
+class InternetInitial extends InternetState {
+ 
+}
 
-class InternetConnected extends InternetState {}
+class InternetConnectedWifi extends InternetState {
+    String message; 
+  InternetConnectedWifi({
+    required this.message,
+  });
+}
 
-class InternetDisconnected extends InternetState {}
+class InternetConnectedMobile extends InternetState {
+    String message; 
+  InternetConnectedMobile({
+    required this.message,
+  });
+}
+
+class InternetDisconnected extends InternetState {
+
+  
+  String message; 
+   InternetDisconnected({
+    required this.message,
+  });
+
+
+}
