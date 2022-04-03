@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_news_app/presentation/auth_screens/forgot_password_page.dart';
 import 'package:flutter_news_app/presentation/auth_screens/register_page.dart';
@@ -6,6 +5,7 @@ import 'package:flutter_news_app/presentation/screens/home_screen.dart';
 import 'package:flutter_news_app/utilities/util_widgets.dart';
 
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:page_transition/page_transition.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -75,9 +75,11 @@ class _LoginPageState extends State<LoginPage> {
                                 child: InkWell(
                                   onTap: () {
                                     Navigator.push(
-                                      context,
-                                      MaterialPageRoute(builder: (context) => const ForgotPassword())
-                                    );
+                                        context,
+                                        PageTransition(
+                                            child: const ForgotPassword(),
+                                            type: PageTransitionType
+                                                .rightToLeftJoined));
                                   },
                                   child: Text(
                                     'Forgot Password',
@@ -92,18 +94,20 @@ class _LoginPageState extends State<LoginPage> {
                                 if (validateForm() == true) {
                                   Navigator.push(
                                       context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              const HomeScreen()));
+                                      PageTransition(
+                                          child: const LoginPage(),
+                                          type: PageTransitionType
+                                              .leftToRightJoined));
                                 }
                               }),
                           InkWell(
                             onTap: () {
                               Navigator.push(
                                   context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          const RegisterPage()));
+                                  PageTransition(
+                                      child: const RegisterPage(),
+                                      type: PageTransitionType
+                                          .bottomToTopJoined));
                             },
                             child: RichText(
                               text: TextSpan(children: [

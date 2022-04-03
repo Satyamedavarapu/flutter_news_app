@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_news_app/presentation/auth_screens/login_page.dart';
+import 'package:flutter_news_app/presentation/screens/home_screen.dart';
 import 'package:flutter_news_app/utilities/util_widgets.dart';
 
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:page_transition/page_transition.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
@@ -68,9 +70,10 @@ class _RegisterPageState extends State<RegisterPage> {
                         onTap: () {
                           if (validateForm() == true) {
                             Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(builder: (context) => const LoginPage())
-                            );
+                                context,
+                                PageTransition(
+                                    child: const HomeScreen(),
+                                    type: PageTransitionType.fade));
                           }
                         }),
                     const Padding(padding: EdgeInsets.only(top: 16.0)),
@@ -78,8 +81,9 @@ class _RegisterPageState extends State<RegisterPage> {
                       onTap: () {
                         Navigator.push(
                             context,
-                            MaterialPageRoute(
-                                builder: (context) => const LoginPage()));
+                            PageTransition(
+                                child: const LoginPage(),
+                                type: PageTransitionType.leftToRight));
                       },
                       child: RichText(
                         text: TextSpan(children: [
