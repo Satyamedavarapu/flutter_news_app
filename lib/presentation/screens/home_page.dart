@@ -1,7 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_news_app/blocs/bloc/article_bloc.dart';
+import 'package:flutter_news_app/blocs/article_bloc/article_bloc.dart';
 import 'package:flutter_news_app/cubits/internet_cubit/internet_cubit.dart';
 import 'package:flutter_news_app/data/services/get_news_api.dart';
 import 'package:flutter_news_app/data/models/carousel_model.dart';
