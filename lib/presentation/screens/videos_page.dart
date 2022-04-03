@@ -10,8 +10,8 @@ class VideosPage extends StatefulWidget {
 class _HomeScreenState extends State<VideosPage> {
   @override
   Widget build(BuildContext context) {
-    return const Material(
-      child: Center(child:  Text('Videos Page')),
+    return  Material(
+      child: Center(child:  Text('Videos Page', style: Theme.of(context).textTheme.headline1,)),
     );
   }
 }

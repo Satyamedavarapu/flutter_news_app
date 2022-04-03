@@ -44,22 +44,27 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       body: BlocConsumer<InternetCubit, InternetState>(
         listener: (context, state) {
-            if(state is InternetDisconnected) {
-             ScaffoldMessenger.of(context).showSnackBar( SnackBar(content: Text(state.message),) );
-            } 
-             else if(state is InternetConnectedMobile) {
-             ScaffoldMessenger.of(context).showSnackBar( SnackBar(content: Text(state.message),) );
-            }
-            else if(state is InternetConnectedWifi) {
-             ScaffoldMessenger.of(context).showSnackBar( SnackBar(content: Text(state.message),) );
-            }
-            else if(state is InternetDisconnected) {
-             ScaffoldMessenger.of(context).showSnackBar( SnackBar(content: Text(state.message),) );
-            }
-
+          if (state is InternetDisconnected) {
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text(state.message),
+            ));
+          } else if (state is InternetConnectedMobile) {
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text(state.message),
+            ));
+          } else if (state is InternetConnectedWifi) {
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text(state.message),
+            ));
+          } else if (state is InternetDisconnected) {
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text(state.message),
+            ));
+          }
         },
         builder: (context, state) {
-          if (state is InternetConnectedWifi || state is InternetConnectedMobile) {
+          if (state is InternetConnectedWifi ||
+              state is InternetConnectedMobile) {
             return Column(
               children: [
                 Expanded(flex: 2, child: popRow.topRow(context)),
@@ -69,11 +74,20 @@ class _HomePageState extends State<HomePage> {
               ],
             );
           } else if (state is InternetInitial) {
-            return const Text('');
+            return const Center(
+              child: CircularProgressIndicator.adaptive(),
+            );
           } else if (state is InternetDisconnected) {
-            return const Text('');
+            return Text(
+              'Internet Disconnected',
+              style: Theme.of(context).textTheme.bodyText1,
+            );
           } else {
-            return const Center(child: Text('Network Error'));
+            return Center(
+                child: Text(
+              'Network Error',
+              style: Theme.of(context).textTheme.bodyText1,
+            ));
           }
         },
       ),
@@ -155,7 +169,6 @@ class _HomePageState extends State<HomePage> {
                     ],
                   ))
             ]),
-            // child: blocBuilder(),
           ),
         ),
       ),
@@ -194,17 +207,26 @@ class _HomePageState extends State<HomePage> {
       builder: (context, state) {
         if (state is ArticleLoaded) {
           return popNews(context: context, articles: state.list[0]);
-          // return Text(
-          //     state.list[index].publishedAt.toString().split('T').first);
-
         } else if (state is ArticleFailure) {
-          return const Center(child: Text('Failed to Load Articles'));
+          return Center(
+              child: Text(
+            'Failed to Load Articles',
+            style: Theme.of(context).textTheme.headline1,
+          ));
         } else if (state is ArticleError) {
-          return const Center(child: Text('Error in Loading Articles'));
+          return Center(
+              child: Text(
+            'Error in Loading Articles',
+            style: Theme.of(context).textTheme.headline1,
+          ));
         } else if (state is ArticleInitial) {
           return const Center(child: CircularProgressIndicator.adaptive());
         } else {
-          return const Center(child: Text('Something Went wrong'));
+          return Center(
+              child: Text(
+            'Something Went wrong',
+            style: Theme.of(context).textTheme.headline1,
+          ));
         }
       },
     );
@@ -233,48 +255,27 @@ class _HomePageState extends State<HomePage> {
                 );
               });
         } else if (state is ArticleFailure) {
-          return const Center(child: Text('Failed to Load Articles'));
+          return Center(
+              child: Text(
+            'Failed to Load Articles',
+            style: Theme.of(context).textTheme.headline1,
+          ));
         } else if (state is ArticleError) {
-          return const Center(child: Text('Error in Loading Articles'));
+          return Center(
+              child: Text(
+            'Error in Loading Articles',
+            style: Theme.of(context).textTheme.headline1,
+          ));
         } else if (state is ArticleInitial) {
           return const Center(child: CircularProgressIndicator.adaptive());
         } else {
-          return const Center(child: Text('Something Went wrong'));
+          return Center(
+              child: Text(
+            'Something Went wrong',
+            style: Theme.of(context).textTheme.headline1,
+          ));
         }
       },
     );
   }
-
-  List<CarouselModel> cList = [
-    CarouselModel(
-        likes: 30,
-        categoryName: 'Entertainment',
-        headline: 'RRR inches away from 1000Crores',
-        image:
-            'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cnJyJTIwbW92aWV8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60'),
-    CarouselModel(
-        likes: 12,
-        categoryName: 'Sports',
-        headline: 'KKR beats punjab',
-        image:
-            'https://images.unsplash.com/photo-1607734834519-d8576ae60ea6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8aXBsfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60'),
-    CarouselModel(
-        likes: 15,
-        categoryName: 'International',
-        headline: 'Imran khan to lose no motion',
-        image:
-            'https://images.unsplash.com/photo-1580905325386-dfa16677a1f5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTF8fGltcmFuJTIwa2hhbnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60'),
-    CarouselModel(
-        likes: 9,
-        categoryName: 'Politics',
-        headline: 'Congress lashes modi about rising fuel prices',
-        image:
-            'https://images.unsplash.com/photo-1561995708-904fbc0430fa?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8bmFyZW5kcmElMjBtb2RpfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60'),
-    CarouselModel(
-        likes: 27,
-        categoryName: 'International',
-        headline: 'Latest news about Russia-Ukraine War',
-        image:
-            'https://images.unsplash.com/photo-1565711561500-49678a10a63f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8dWtyYWluZXxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60'),
-  ];
 }
