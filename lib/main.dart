@@ -12,7 +12,7 @@ import 'package:flutter_news_app/utilities/app_theme.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   NotificationService().initNotification();
-  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+  // SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   runApp(MyApp(connectivity: Connectivity()));
 }
 
